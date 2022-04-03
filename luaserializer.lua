@@ -1,16 +1,28 @@
 local SerialzerMeta = {}
 
-function SerialzerMeta.create(pretty, margin)
-    local Serializer = {
+function SerialzerMeta.create(pretty, space)
+    local tspace = type(space)
+    if tspace == 'nil' then
+        space = string.rep(' ', 4)
+    elseif tspace == 'number' then
+        space = string.rep(' ', space)
+    elseif tspace ~= 'string' then
+        error('bad argument #2: number or string expected')
+    end
+
+    local o = {
         pretty = pretty or false,
-        margin = margin or string.rep(' ', 4)
+        space = space
     }
-    setmetatable(Serializer, SerialzerMeta)
-    return Serializer
+    assert(type(o.pretty) == 'boolean', 'bad argument #1: boolean expected')
+
+    setmetatable(o, SerialzerMeta)
+    return o
 end
 
 function SerialzerMeta:serialize(any, level)
     assert(type(self) == 'table', '#self required')
+
     local t = type(any)
 
     level = level or 0
@@ -42,8 +54,8 @@ function SerialzerMeta:serializeTable(tb, level)
 
         if serializedValue ~= nil then
             if self.pretty == true then
-                result = result .. string.rep(self.margin, level)
-                result = result .. string.format('[%q] = %s', k, serializedValue)
+                result = result ..
+                    string.rep(self.space, level) .. string.format('[%q] = %s', k, serializedValue)
                 if nk ~= nil then result = result .. ',' end
                 result = result .. '\n'
             else
@@ -54,7 +66,7 @@ function SerialzerMeta:serializeTable(tb, level)
 
         k = nk
     end
-    if self.pretty == true then result = result .. string.rep(self.margin, level - 1) end
+    if self.pretty == true then result = result .. string.rep(self.space, level - 1) end
     result = result .. '}'
     return result
 end

@@ -1,6 +1,6 @@
 local Serializer = loadfile('luaserializer.lua')()
 
-local s1, s2 = Serializer.create(true, '  '), Serializer.create(false)
+local s1, s2 = Serializer.create(true, 2), Serializer.create(false)
 
 local str = s1:serialize(
     {

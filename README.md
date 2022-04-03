@@ -19,13 +19,13 @@ local Serializer = loadfile('luaserializer.lua')()
 ### 2. 创建对象
 
 ```lua
-local s = Serialzer.create(true, string.rep(' ', 4))
+local s = Serialzer.create(true, 4)
 ```
 
 ### 3. 序列化
 
 ```lua
-local str = s:serialize(value)
+local str = s:serialize(object)
 ```
 
 ### 4. 反序列化
@@ -39,14 +39,14 @@ local object = load('return ' .. str)()
 ---
 
 ```lua
-luaserializer.create(pretty, margin)
+luaserializer.create(pretty, space)
 ```
 返回一个Serializer对象。
 
 |参数名|类型|简介|
 |:-:|:-:|:-:|
-|`pretty`|boolean|是否格式化输出，与`margin`一起使用，默认为`false`|
-|`margin`|string|格式化输出时，用于缩进的单位，默认为4个空格|
+|`pretty`|boolean|是否格式化输出，与`space`一起使用，默认为`false`|
+|`space`|string或number|格式化输出时，用于缩进的单位，默认为4个空格; 类型是 number 时，单位为 number 个空格|
 
 ---
 
@@ -57,7 +57,7 @@ Serializer.serialize(self, any, level)
 |参数名|类型|简介|
 |:-:|:-:|:-:|
 |`any`|任意类型|要序列化的对象|
-|`level`|number|(用于格式化)嵌套的table层数，默认为0|
+|`level`|number|(用于格式化)嵌套的 table 层数，默认为0|
 
 ---
 
@@ -68,5 +68,5 @@ Serializer.serializeTable(self, tb, level)
 |参数名|类型|简介|
 |:-:|:-:|:-:|
 |`tb`|table|要序列化的表|
-|`level`|number|(用于格式化)嵌套的table层数，默认为0|
+|`level`|number|(用于格式化)嵌套的 table 层数，默认为0|
 ---
