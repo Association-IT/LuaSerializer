@@ -13,7 +13,7 @@ Clone后直接运行 `test.lua`。
 使用 `require()` 或 `loadfile()`。
 
 ```lua
-local Serializer = require('luaserializer')
+local Serializer = loadfile('luaserializer.lua')()
 ```
 
 ### 2. 创建对象
@@ -25,7 +25,7 @@ local s = Serialzer.create(true, string.rep(' ', 4))
 ### 3. 序列化
 
 ```lua
-local str = Serializer.serialize(value)
+local str = s:serialize(value)
 ```
 
 ### 4. 反序列化
@@ -46,27 +46,27 @@ luaserializer.create(pretty, margin)
 |参数名|类型|简介|
 |:-:|:-:|:-:|
 |`pretty`|boolean|是否格式化输出，与`margin`一起使用，默认为`false`|
-|`margin`|string|格式化输出时，用于缩进的单位|
+|`margin`|string|格式化输出时，用于缩进的单位，默认为4个空格|
 
 ---
 
 ```lua
-Serializer.serialize(any, level)
+Serializer.serialize(self, any, level)
 ```
 返回序列化成字符串的对象，**对于`nil`, `string`, `userdata`, `function` 和 `thread`, 返回`nil`**。
 |参数名|类型|简介|
 |:-:|:-:|:-:|
 |`any`|任意类型|要序列化的对象|
-|`level`|number|(用于格式化)嵌套的table层数|
+|`level`|number|(用于格式化)嵌套的table层数，默认为0|
 
 ---
 
 ```lua
-Serializer.serializeTable(tb, level)
+Serializer.serializeTable(self, tb, level)
 ```
 返回序列化成字符串的表。
 |参数名|类型|简介|
 |:-:|:-:|:-:|
 |`tb`|table|要序列化的表|
-|`level`|number|(用于格式化)嵌套的table层数|
+|`level`|number|(用于格式化)嵌套的table层数，默认为0|
 ---
